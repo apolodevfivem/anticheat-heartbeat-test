@@ -1,6 +1,7 @@
 -- Apolo Dev --
 
 local HeartBeats = {} -- aqui fica os players ativo com os heartbeats
+local WaitingHeartBeat = {}
 
 -- Aqui é o evento que vai receber os heartbeat 
 RegisterNetEvent("anticheat_heartbeat")
@@ -16,11 +17,32 @@ CreateThread(function()
         for ThisSource, OldOsTime in pairs(HeartBeats) do
             if (os.time() - OldOsTime) >= 30 then -- Maior que 30 segundos
                 DropPlayer(ThisSource, "Suspeita de desativação de script")
+                -- Pode adicionar ban caso queira
+            end
+        end
+
+        for ThisSource, OldOsTime in pairs(WaitingHeartBeat) do -- Verificando se depois que o player entrou ele foi pro heart beat default
+            if (os.time() - OldOsTime) >= 90 then -- 1 minuto e 30 segundos
+                if HeartBeats[ThisSource] then
+                    WaitingHeartBeat[ThisSource] = nil -- Fazendo o exit da table pra evitar ficar verificando sempre
+                else
+                    WaitingHeartBeat[ThisSource] = nil
+                    DropPlayer(ThisSource, "Suspeita de desativação de script")
+                    -- Pode adicionar ban caso queira
+                end
+                -- Se a pessoa não se verificou ou seja, ao iniciar o resource client side esteja pausado então ele é kickado
             end
         end
 
         Wait(10000)
     end
+end)
+
+RegisterNetEvent("playerConnecting") -- Não tenho certeza que o playerconnecting funciona 100% das vezes altere caso prefira
+AddEventHandler("playerConnecting", function()
+    local source = source
+
+    WaitingBeat[source] = os.time() -- Adicionando ao wait pra ser verificado depois pra ver se o player se conectou mesmo
 end)
 
 -- Duvidas: "Será se stopado o anticheat de começo ele não adicione automaticamente o source??"
