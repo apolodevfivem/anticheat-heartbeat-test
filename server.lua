@@ -52,7 +52,7 @@ end)
 -- a nova verificação consistiria em pedir uma informação do server para o client e o client retorna uma resposta aleatória e definida pelo server pra evitar o a informação claramente exposta do server aqui
 -- exposta então, poderia ser criada uma resposta aleatória que não seja exposta justamente para evitar que o resource seja stopado e seja mais eficiente"
 
--- Duvidas: sendo stopado o cheat já de inicio e triggando o evento pode ser o bypass então tem que ser criado uma forma "aleatória" pra não ser stopado e triggado o anticheat_heartbeat
+-- Duvidas: sendo stopado o anticheat já de inicio e triggando o evento pode ser o bypass então tem que ser criado uma forma "aleatória" pra não ser stopado e triggado o anticheat_heartbeat
 -- Possível solução: Enviar um trigger via server-side pedindo pro client-side aleatóriamente usando um math.random acima de 5 segundos para evitar má otimização pra ficar randomizando dae pede qualquer informação
 -- pro client-side pra voltar com uma solução pra descobrir que a pessoa está com a resource via client-side rodando porque se não me engano tem forma de triggar o heartbeat pra evitar ser detectado mesmo com o
 -- stop sendo feito no client-side
